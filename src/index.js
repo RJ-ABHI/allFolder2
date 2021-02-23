@@ -1,7 +1,7 @@
 import { StrictMode } from "react";
 import ReactDOM from "react-dom";
 
-import App from "./App";
+import App from "./MainComp";
 import "bootstrap/dist/css/bootstrap.css";
 
 const rootElement = document.getElementById("root");

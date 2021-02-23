@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import firebase from "firebase";
 
-class Login extends Component {
+class SignUp extends Component {
   state = {
-    mainArray: { email: "", password: "" }
+    mainArray: { email: "", name: "", password: "" }
   };
   handleChange = (e) => {
     let { currentTarget: inp } = e;
@@ -13,7 +14,18 @@ class Login extends Component {
   };
   handleSubmit = (e) => {
     e.preventDefault();
+    let locaArray = this.state.mainArray;
     console.log(this.state.mainArray);
+    const db = firebase.firestore();
+    // db.settings({
+    //   timeStampsInSnapShots: true
+    // });
+    const userRef = db.collection("/users").add({
+      email: locaArray.email,
+      name: locaArray.name,
+      password: locaArray.password
+    });
+    console.log(userRef);
   };
   render() {
     return (
@@ -32,6 +44,18 @@ class Login extends Component {
             />
           </div>
           <div class="form-group">
+            <label for="exampleFormControlInput1">Enter Your Name</label>
+            <input
+              type="name"
+              class="form-control"
+              id="exampleFormControlInput1"
+              name="name"
+              value={this.state.mainArray.name}
+              onChange={this.handleChange}
+              placeholder="abcd"
+            />
+          </div>
+          <div class="form-group">
             <label for="exampleFormControlInput1">Password</label>
             <input
               type="password"
@@ -42,8 +66,8 @@ class Login extends Component {
               id="exampleFormControlInput1"
             />
           </div>
-          <Link to="/signUp">
-            <div className="text-center">Not Login go to sign Up Page</div>
+          <Link to="/login">
+            <div className="text-center">Already Login go to sign In Page</div>
           </Link>
           <button className="btn btn-primary">Submit</button>
         </form>
@@ -51,4 +75,4 @@ class Login extends Component {
     );
   }
 }
-export default Login;
+export default SignUp;
